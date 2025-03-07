@@ -9,6 +9,13 @@
   height:230px;
 }
 
+.editor-expanded{
+  margin: 20px 0px;
+  width:600px;
+  height:100vh;
+}
+
+
 .header{
   height:35px;
   border-bottom: 1px solid;
@@ -41,4 +48,16 @@
 .maximize:hover{
   color:green
 }
+
+.minimize{
+  transition: color 0.3s ease-in-out;
+}
+
+.minimize:hover{
+  color:green
+}
+
+
+
+
 
