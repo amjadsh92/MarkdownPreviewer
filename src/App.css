@@ -1,0 +1,44 @@
+.body{
+  padding:1px;
+  background-color:#87b5b5
+}
+
+.editor{
+  margin-top: 30px;
+  width:600px;
+  height:230px;
+}
+
+.header{
+  height:35px;
+  border-bottom: 1px solid;
+  background-color: #4aa3a3;
+  padding:8px;
+  font-weight:800;
+}
+
+.text-area{
+  height:calc(100% - 35px);
+  background-color:#c0d8d8;
+  border-radius:0px;
+
+
+}
+
+.form-control:focus{
+  background-color:#c0d8d8;
+}
+
+.editor-title{
+  margin-top:-2px;
+  display:inline-block;
+}
+
+.maximize {
+  transition: color 0.3s ease-in-out;
+}
+
+.maximize:hover{
+  color:green
+}
+
