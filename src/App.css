@@ -4,12 +4,25 @@
 }
 
 .editor{
-  margin-top: 30px;
+  margin:30px 0px;
   width:600px;
   height:230px;
 }
 
+.previewer{
+
+  width:800px;
+  height:200px;
+
+}
+
 .editor-expanded{
+  margin: 20px 0px;
+  width:600px;
+  height:100vh;
+}
+
+.previewer-expanded{
   margin: 20px 0px;
   width:600px;
   height:100vh;
