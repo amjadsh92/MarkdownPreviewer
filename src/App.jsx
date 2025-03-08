@@ -7,31 +7,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMaximize } from "@fortawesome/free-solid-svg-icons";
 import { faDownLeftAndUpRightToCenter } from "@fortawesome/free-solid-svg-icons";
 
-//test
+
 function App() {
+
+  const [displayEditor, setDisplayEditor] = useState(true)
+  const [displayPreviewer, setDisplayPreviewer] = useState(true)
+
   return (
     <div className="body h-100 min-vh-100 w-100">
-      <Editor />
-      <Previewer />
+      <Editor isVisible={displayEditor} setDisplayPreviewer={setDisplayPreviewer}/>
+      <Previewer isVisible={displayPreviewer} setDisplayEditor={setDisplayEditor} />
     </div>
   );
 }
 
-function Editor() {
+function Editor({isVisible,setDisplayPreviewer}) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   function expand() {
     setIsExpanded(true);
+    setDisplayPreviewer(false)
   }
 
   function minimize() {
     setIsExpanded(false);
+    setDisplayPreviewer(true)
   }
 
   return (
     <div
       id="editor"
-      className={`${isExpanded ? "editor-expanded" : "editor"} mx-auto border border-dark`}
+      className={`${ isVisible ? (isExpanded ? "editor-expanded" : "editor") : "d-none"} mx-auto border border-dark`}
     >
       <div
         id="header"
@@ -62,21 +68,24 @@ function Editor() {
 
 
 
-function Previewer() {
+function Previewer({isVisible, setDisplayEditor}) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   function expand() {
     setIsExpanded(true);
+    setDisplayEditor(false)
   }
 
   function minimize() {
     setIsExpanded(false);
+    setDisplayEditor(true)
+
   }
 
   return (
     <div
       id="previewer"
-      className={`${isExpanded ? "previewer-expanded" : "previewer"} mx-auto border border-dark`}
+      className={`${ isVisible ? (isExpanded ? "previewer-expanded" : "previewer") : "d-none"} mx-auto border border-dark`}
     >
       <div
         id="header"
@@ -97,9 +106,9 @@ function Previewer() {
           />
         )}
       </div>
-      <textarea className="text-area border-0 w-100 form-control border-0 shadow-none">
+      <div className="previewer-area border-0 w-100 border-0">
         {" "}
-      </textarea>
+      </div>
     </div>
   );
 }
