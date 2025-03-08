@@ -41,7 +41,14 @@
   height:calc(100% - 35px);
   background-color:#c0d8d8;
   border-radius:0px;
+  
 
+}
+
+.previewer-data{
+  word-wrap: break-word;  /* Ensures long words break */
+  overflow-wrap: break-word; /* Alternative for better support */
+ /* white-space: pre-wrap;  /* Preserves newlines and wraps text */
 
 }
 
@@ -73,6 +80,7 @@
 .minimize:hover{
   color:green
 }
+
 
 
 

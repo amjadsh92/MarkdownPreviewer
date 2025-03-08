@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMaximize } from "@fortawesome/free-solid-svg-icons";
 import { faDownLeftAndUpRightToCenter } from "@fortawesome/free-solid-svg-icons";
-
+import React from "react";
 
 function App() {
 
@@ -39,7 +39,7 @@ function Editor({isVisible,setDisplayPreviewer, setDataTyped}) {
 
   function data(e){
     setDataTyped(e.target.value)
-    
+     
   }
 
   
@@ -92,6 +92,17 @@ function Previewer({isVisible, setDisplayEditor, data}) {
 
   }
 
+  const cappedData = data.replace(/\n{3,}/g, "\n\n");
+  
+  //let processedData = data.replace(/\n+/g, <br/>);
+  //console.log(data);
+
+  let processedData = cappedData.split(/(\n)/).map((line, index) =>
+    line === "\n" ? <br key={index} /> : <React.Fragment key={index}>{line}</React.Fragment>
+  )
+
+ 
+  
   return (
     <div
       id="previewer"
@@ -117,7 +128,7 @@ function Previewer({isVisible, setDisplayEditor, data}) {
         )}
       </div>
       <div className="previewer-area border-0 w-100 border-0">
-        {data}
+        <div className="previewer-data p-2">{processedData}</div>
       </div>
     </div>
   );
