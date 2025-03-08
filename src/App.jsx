@@ -12,17 +12,20 @@ function App() {
 
   const [displayEditor, setDisplayEditor] = useState(true)
   const [displayPreviewer, setDisplayPreviewer] = useState(true)
+  const [dataTyped, setDataTyped] = useState("")
 
+  
   return (
     <div className="body h-100 min-vh-100 w-100">
-      <Editor isVisible={displayEditor} setDisplayPreviewer={setDisplayPreviewer}/>
-      <Previewer isVisible={displayPreviewer} setDisplayEditor={setDisplayEditor} />
+      <Editor isVisible={displayEditor} setDisplayPreviewer={setDisplayPreviewer} setDataTyped={setDataTyped}/>
+      <Previewer isVisible={displayPreviewer} setDisplayEditor={setDisplayEditor} data={dataTyped} />
     </div>
   );
 }
 
-function Editor({isVisible,setDisplayPreviewer}) {
+function Editor({isVisible,setDisplayPreviewer, setDataTyped}) {
   const [isExpanded, setIsExpanded] = useState(false);
+  
 
   function expand() {
     setIsExpanded(true);
@@ -33,6 +36,13 @@ function Editor({isVisible,setDisplayPreviewer}) {
     setIsExpanded(false);
     setDisplayPreviewer(true)
   }
+
+  function data(e){
+    setDataTyped(e.target.value)
+    
+  }
+
+  
 
   return (
     <div
@@ -58,8 +68,8 @@ function Editor({isVisible,setDisplayPreviewer}) {
           />
         )}
       </div>
-      <textarea className="text-area border-0 w-100 form-control border-0 shadow-none">
-        {" "}
+      <textarea onChange={() => data(event)} className="text-area border-0 w-100 form-control border-0 shadow-none">
+        
       </textarea>
     </div>
   );
@@ -68,7 +78,7 @@ function Editor({isVisible,setDisplayPreviewer}) {
 
 
 
-function Previewer({isVisible, setDisplayEditor}) {
+function Previewer({isVisible, setDisplayEditor, data}) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   function expand() {
@@ -107,7 +117,7 @@ function Previewer({isVisible, setDisplayEditor}) {
         )}
       </div>
       <div className="previewer-area border-0 w-100 border-0">
-        {" "}
+        {data}
       </div>
     </div>
   );
