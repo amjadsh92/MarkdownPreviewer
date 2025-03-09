@@ -12,7 +12,7 @@
 .previewer{
 
   width:800px;
-  height:200px;
+  min-height:200px;
 
 }
 
@@ -37,12 +37,35 @@
   font-weight:800;
 }
 
+.hash3{
+  font-size:18.72px
+}
+.hash4{
+  font-size:16px
+}
+.hash5{
+  font-size:13.28px
+}
+.hash6{
+  font-size:10.72px
+}
+
+
 .previewer-area,.text-area{
-  height:calc(100% - 35px);
   background-color:#c0d8d8;
   border-radius:0px;
   
 
+}
+
+.text-area{
+
+  height:calc(100% - 35px);
+
+}
+
+.previewer-area{
+  min-height:calc(200px - 35px);
 }
 
 .previewer-data{

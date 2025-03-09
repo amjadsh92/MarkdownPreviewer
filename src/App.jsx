@@ -94,11 +94,8 @@ function Previewer({isVisible, setDisplayEditor, data}) {
 
   const cappedData = data.replace(/\n{3,}/g, "\n\n");
   
-  //let processedData = data.replace(/\n+/g, <br/>);
-  //console.log(data);
-
   let processedData = cappedData.split(/(\n)/).map((line, index) =>
-    line === "\n" ? <br key={index} /> : <React.Fragment key={index}>{line}</React.Fragment>
+    line === "\n" ? <br key={index} /> : <React.Fragment key={index}><Parser data = {line} /></React.Fragment>
   )
 
  
@@ -135,3 +132,74 @@ function Previewer({isVisible, setDisplayEditor, data}) {
 }
 
 export default App;
+
+function Parser({data}){
+    
+  function containsInterpretedHash(data){
+    let patternHash = /^(?:\s{0,3})?(#{1,6})(?!\S)(\s?.{0,})/
+    let containsInterpretedHash = data.match(patternHash) 
+    return containsInterpretedHash
+
+}
+  let InterpretedHash = containsInterpretedHash(data)
+
+  return (InterpretedHash ? <Hash data={data} dataSegment = {InterpretedHash} /> : data)
+
+
+
+
+
+}
+
+
+
+function Hash({data, dataSegment}){
+
+  if ( data === dataSegment[1] && !dataSegment[2]){
+    if(dataSegment[1].length === 1){
+        return (<div className="border-bottom border-2 border-dark mt-2"></div>)   
+    }
+    else if (dataSegment[1].length === 2){
+      return (<div className="border-bottom border-1 border-dark mt-2"></div>)  
+    }
+    else{
+      return ""
+    }
+}
+ else if(dataSegment[2]){
+  let str = dataSegment[2].match(/^(?:\s{0,}|(.{0,})\s{1,})(#{1,})(?!\S)(\s{0,})$/)
+  
+  
+  if(dataSegment[1].length === 1){
+
+    
+      return <div className="border-bottom border-2 border-dark mt-2 fs-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>
+    
+    
+    
+  }
+  else if(dataSegment[1].length === 2){
+    return (<div className="border-bottom border-1 border-dark mt-2 fs-4 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+
+  }
+  else if(dataSegment[1].length === 3){
+    return (<div className="hash3 mt-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+
+  }
+  else if(dataSegment[1].length === 4){
+    return (<div className="hash4 mt-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+
+  }
+
+  else if(dataSegment[1].length === 5){
+    return (<div className="hash5 mt-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+
+  }
+  else if(dataSegment[1].length === 6){
+    return (<div className="hash6 mt-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+
+  }
+  }
+
+ }
+
