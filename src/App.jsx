@@ -38,7 +38,30 @@ function Editor({isVisible,setDisplayPreviewer, setDataTyped}) {
   }
 
   function data(e){
-    setDataTyped(e.target.value)
+    let data = e.target.value
+    data = data.replace(/^\n+/, "");
+    const headingPattern = /^(?:\s{0,3})?(#{1,6})(?!\S)(\s?.{0,})/;
+    const newlinePattern = /\n{2,}/g;
+
+    const cappedData = data.replace(newlinePattern, (match, offset, fullString) => {
+        // Extract the text before the matched \n{2,}
+        const beforeMatch = fullString.slice(0, offset);
+        const afterMatch =  fullString.slice(offset  + match.length);
+        
+        
+        // Check if the heading pattern appears just before \n{2,}
+        if (headingPattern.test(afterMatch.split("\n")[0])){
+          return "\n"
+        }
+        else if (headingPattern.test(beforeMatch.split("\n").pop()) ) {
+            return "\n"; // Keep double newlines
+        } else {
+            return "\n\n"; // Collapse multiple newlines into one
+        }
+    });
+
+
+    setDataTyped(cappedData)
      
   }
 
@@ -92,9 +115,10 @@ function Previewer({isVisible, setDisplayEditor, data}) {
 
   }
 
-  const cappedData = data.replace(/\n{3,}/g, "\n\n");
+
+  //const cappedData = data.replace(/\n{2,}/g, "\n\n");
   
-  let processedData = cappedData.split(/(\n)/).map((line, index) =>
+  let processedData = data.split(/(\n)/).map((line, index) =>
     line === "\n" ? <br key={index} /> : <React.Fragment key={index}><Parser data = {line} /></React.Fragment>
   )
 
@@ -136,7 +160,9 @@ export default App;
 function Parser({data}){
     
   function containsInterpretedHash(data){
+    
     let patternHash = /^(?:\s{0,3})?(#{1,6})(?!\S)(\s?.{0,})/
+
     let containsInterpretedHash = data.match(patternHash) 
     return containsInterpretedHash
 
@@ -155,12 +181,12 @@ function Parser({data}){
 
 function Hash({data, dataSegment}){
 
-  if ( data === dataSegment[1] && !dataSegment[2]){
-    if(dataSegment[1].length === 1){
-        return (<div className="border-bottom border-2 border-dark mt-2"></div>)   
+  if ( data === dataSegment[1]){
+    if(dataSegment[1].length === 1 && !dataSegment[2]){
+        return (<div className="border-bottom border-2 border-dark"></div>)   
     }
     else if (dataSegment[1].length === 2){
-      return (<div className="border-bottom border-1 border-dark mt-2"></div>)  
+      return (<div className="border-bottom border-1 border-dark"></div>)  
     }
     else{
       return ""
@@ -173,30 +199,30 @@ function Hash({data, dataSegment}){
   if(dataSegment[1].length === 1){
 
     
-      return <div className="border-bottom border-2 border-dark mt-2 fs-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>
+      return <div className="border-bottom border-2 border-dark fs-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>
     
     
     
   }
   else if(dataSegment[1].length === 2){
-    return (<div className="border-bottom border-1 border-dark mt-2 fs-4 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+    return (<div className="border-bottom border-1 border-dark fs-4 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
 
   }
   else if(dataSegment[1].length === 3){
-    return (<div className="hash3 mt-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+    return (<div className="hash3 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
 
   }
   else if(dataSegment[1].length === 4){
-    return (<div className="hash4 mt-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+    return (<div className="hash4 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
 
   }
 
   else if(dataSegment[1].length === 5){
-    return (<div className="hash5 mt-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+    return (<div className="hash5 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
 
   }
   else if(dataSegment[1].length === 6){
-    return (<div className="hash6 mt-2 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
+    return (<div className="hash6 fw-bold">{ str ? str[1] : dataSegment[2]}</div>) 
 
   }
   }
