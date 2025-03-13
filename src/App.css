@@ -50,6 +50,11 @@
   font-size:10.72px
 }
 
+.code{
+  width:100%;
+  margin:0px;
+}
+
 
 .previewer-area,.text-area{
   background-color:#c0d8d8;
