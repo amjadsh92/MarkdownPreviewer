@@ -89,6 +89,7 @@ function Editor({ isVisible, togglePreview, setContent }) {
         // Extract the text just after the matched \n{2,}
         const afterMatch = fullString.slice(offset + match.length);
 
+        
         //Check if the hashpattern appears just after \n{2,}
         // For example:
         // "aaaaaaaaaaaaaaa# dfsdfsdfdfdfdfdfdfdf"
@@ -102,6 +103,10 @@ function Editor({ isVisible, togglePreview, setContent }) {
         // if (hashPattern.test(afterMatch.split("\n")[0])) {
         //   return "\n";
         //  }
+        if (hashPattern.test(afterMatch.split("\n")[0])){
+          return "\n";
+        }
+
         //Check if the hashpattern appears just before \n{2,}
         // For example:
         // "# dfsdfsdfdfdfdfdfdfdfaaaaaaaaaaaaa"
@@ -112,9 +117,7 @@ function Editor({ isVisible, togglePreview, setContent }) {
         // will be transformed in "\n", and
         // aaaaaaaaaaaaa will only move one line
         // downwords and not more.
-        if (hashPattern.test(afterMatch.split("\n")[0])){
-          return "\n";
-        }
+
         if (hashPattern.test(beforeMatch.split("\n").pop()) ) {
           return "\n";
         } else {
@@ -159,14 +162,7 @@ function Previewer({ isVisible, toggleEditor, data }) {
 
   //debugger;
   let processedData = data?.match(/(?:^(?: {4}|\t).*(?:\n{1,}(?: {4}|\t).*)*)|(?:[^\n]+|\n)/gm)?.map((line, index) => {
-    // Check if the previous line exists and matches the pattern
-    //const previousLine = index > 0 ? arr[index - 1] : "";
-    //const isPreviousCodeBlock = /^( {4}|\t)(.*)/.test(previousLine);
-  
-    // If the current line is "\n" and the previous line was a code block, return null
-    //if (line === "\n" && isPreviousCodeBlock) {
-    //  return null;
-    //}
+    
   
     return line === "\n" ? (
       <br key={index} />
