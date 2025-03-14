@@ -70,7 +70,9 @@
 }
 
 .previewer-area{
+  height:calc(100% - 35px);
   min-height:calc(200px - 35px);
+  
 }
 
 .previewer-data{
