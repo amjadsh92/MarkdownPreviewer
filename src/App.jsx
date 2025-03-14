@@ -62,13 +62,28 @@ function Editor({ isVisible, togglePreview, setContent }) {
     let data = e.target.value;
     //Insure that the newline does not have an effect at
     //the beginning of the document
+
+   
     data = data.replace(/^\n+/, "");
     //Insure that newline does not have an effect for hashes
     const hashPattern = /^(?:\s{0,3})?(#{1,6})(?!\S)\s?(.{0,})/;
     const newlinePattern = /\n{2,}/g;
+    const codeBlockPattern = /(?:^(?: {4}|\t).*(?:\n{1,}(?: {4}|\t).*)*)/gm;
+    let codeBlocks = [];
+    let cbMatch;
+    while ((cbMatch = codeBlockPattern.exec(data)) !== null) {
+      codeBlocks.push({ start: cbMatch.index, end: codeBlockPattern.lastIndex });
+    }
     const cappedData = data.replace(
       newlinePattern,
       (match, offset, fullString) => {
+
+        const insideCodeBlock = codeBlocks.some(block => offset >= block.start && offset < block.end);
+  
+         if (insideCodeBlock) {
+            // Do not alter newlines that are inside a code block.
+            return match;
+          }
         // Extract the text just before the matched \n{2,}
         const beforeMatch = fullString.slice(0, offset);
         // Extract the text just after the matched \n{2,}
@@ -84,9 +99,9 @@ function Editor({ isVisible, togglePreview, setContent }) {
         // The hashPattern is just after the match
         // So the "\n\n"(or more in case there are)
         // will be transformed in "\n"
-        if (hashPattern.test(afterMatch.split("\n")[0])) {
-          return "\n";
-        }
+        // if (hashPattern.test(afterMatch.split("\n")[0])) {
+        //   return "\n";
+        //  }
         //Check if the hashpattern appears just before \n{2,}
         // For example:
         // "# dfsdfsdfdfdfdfdfdfdfaaaaaaaaaaaaa"
@@ -97,7 +112,10 @@ function Editor({ isVisible, togglePreview, setContent }) {
         // will be transformed in "\n", and
         // aaaaaaaaaaaaa will only move one line
         // downwords and not more.
-        if (hashPattern.test(beforeMatch.split("\n").pop())) {
+        if (hashPattern.test(afterMatch.split("\n")[0])){
+          return "\n";
+        }
+        if (hashPattern.test(beforeMatch.split("\n").pop()) ) {
           return "\n";
         } else {
           return "\n\n";
@@ -140,7 +158,7 @@ function Previewer({ isVisible, toggleEditor, data }) {
   };
 
   //debugger;
-  let processedData = data?.match(/(?:^(?: {4}|\t).*(?:\n(?: {4}|\t).*)*)|(?:[^\n]+|\n)/gm)?.map((line, index) => {
+  let processedData = data?.match(/(?:^(?: {4}|\t).*(?:\n{1,}(?: {4}|\t).*)*)|(?:[^\n]+|\n)/gm)?.map((line, index) => {
     // Check if the previous line exists and matches the pattern
     //const previousLine = index > 0 ? arr[index - 1] : "";
     //const isPreviousCodeBlock = /^( {4}|\t)(.*)/.test(previousLine);
@@ -264,7 +282,8 @@ function Code({dataSegment}){
 
   let codeContent  = dataSegment[2]
 
-  codeContent = codeContent.replace(/(?<=\n)\s{4}/g,"")
+  codeContent = codeContent.replace(/(\n+)\s{4}/g, "$1");
+  
   
   return (
   
