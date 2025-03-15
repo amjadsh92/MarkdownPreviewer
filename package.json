@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.3",
     "dompurify": "^3.2.4",
     "marked": "^15.0.7",
+    "marked-react": "^3.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-syntax-highlighter": "^15.6.1"

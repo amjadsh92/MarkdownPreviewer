@@ -2,11 +2,16 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
+import Markdown from 'marked-react';
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMaximize } from "@fortawesome/free-solid-svg-icons";
 import { faDownLeftAndUpRightToCenter } from "@fortawesome/free-solid-svg-icons";
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
+
 import DOMPurify from 'dompurify';
 import React from "react";
 
@@ -60,7 +65,13 @@ function Editor({ isVisible, togglePreview, setContent }) {
 
   const handleChange = (e) => {
     let data = e.target.value;
-    data = marked.parse(data)
+//     marked.setOptions({
+//     gfm: true,        // Enables GitHub Flavored Markdown
+//     breaks: true,     // Ensures single newlines create line breaks
+//     tables: true,     // Enables tables
+//     headerIds: false, // Prevents automatic ID assignment to headers
+// });
+    //data = marked.parse(data)
     setContent(data);
   };
 
@@ -109,7 +120,7 @@ function Previewer({ isVisible, toggleEditor, data }) {
         minimize={handleMinimize}
       />
       <div className="previewer-area border-0 w-100 border-0">
-        <div className="previewer-data p-2"><Parser data={data} /></div>
+        <div className="previewer-data bg-transparent p-2"><Parser data={data} /></div>
       </div>
     </div>
   );
@@ -132,9 +143,17 @@ function Header({ title, isExpanded, expand, minimize }) {
 function Parser({data})
 {
 
-  const sanitizedData = DOMPurify.sanitize(data);
-  return <div dangerouslySetInnerHTML={{ __html: sanitizedData }} />;
-    
+  //const sanitizedData = DOMPurify.sanitize(data);
+  
+  //return <div dangerouslySetInnerHTML={{ __html: data }} />;
+
+  
+
+  return  <div className="markdown-body bg-transparent">
+           <Markdown>{data}</Markdown>
+          </div>
+  
+ 
   
 
 

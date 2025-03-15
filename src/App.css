@@ -1,6 +1,18 @@
 .body{
   padding:1px;
   background-color:#87b5b5
+
+}
+
+.markdown-body table th, .markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid black;
+ 
+}
+
+
+.markdown-body table tr{ 
+  background-color: transparent !important; 
 }
 
 .editor{
@@ -8,7 +20,9 @@
   width:600px;
   height:230px;
 }
-
+.bg-transparent{
+  background-color: turquoise;
+}
 .previewer{
 
   width:800px;
