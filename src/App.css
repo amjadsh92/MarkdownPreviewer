@@ -4,6 +4,32 @@
 
 }
 
+.markdown-body img {
+  display:block;
+  width:70%;
+  margin:50px auto;
+  
+}
+
+.markdown-body h1{
+  border-bottom: 2px solid black;
+}
+
+.markdown-body h2{
+  border-bottom: 1px solid black;
+}
+
+.markdown-body code{
+  background-color: white;
+}
+
+.markdown-body blockquote{
+    border-left: 3px solid #224b4b;
+    color: #224b4b;
+    padding-left: 5px;
+    margin-left: 25px;
+}
+
 .markdown-body table th, .markdown-body table td {
   padding: 6px 13px;
   border: 1px solid black;
@@ -20,9 +46,7 @@
   width:600px;
   height:230px;
 }
-.bg-transparent{
-  background-color: turquoise;
-}
+
 .previewer{
 
   width:800px;
@@ -40,6 +64,10 @@
   margin: 20px 0px;
   width:600px;
   height:100vh;
+}
+
+.previewer-data{
+  margin-bottom:20px
 }
 
 

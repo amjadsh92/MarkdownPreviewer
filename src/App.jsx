@@ -7,13 +7,15 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMaximize } from "@fortawesome/free-solid-svg-icons";
 import { faDownLeftAndUpRightToCenter } from "@fortawesome/free-solid-svg-icons";
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
-
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
-
 import DOMPurify from 'dompurify';
 import React from "react";
+import hljs from 'highlight.js';
+import 'highlight.js/styles/default.css'; // Import the default Highlight.js style
 
 function App() {
   const [markdown, setMarkdown] = useState({
@@ -65,13 +67,7 @@ function Editor({ isVisible, togglePreview, setContent }) {
 
   const handleChange = (e) => {
     let data = e.target.value;
-//     marked.setOptions({
-//     gfm: true,        // Enables GitHub Flavored Markdown
-//     breaks: true,     // Ensures single newlines create line breaks
-//     tables: true,     // Enables tables
-//     headerIds: false, // Prevents automatic ID assignment to headers
-// });
-    //data = marked.parse(data)
+
     setContent(data);
   };
 
@@ -140,23 +136,22 @@ function Header({ title, isExpanded, expand, minimize }) {
 }
 
 
-function Parser({data})
-{
-
-  //const sanitizedData = DOMPurify.sanitize(data);
-  
-  //return <div dangerouslySetInnerHTML={{ __html: data }} />;
-
-  
-
-  return  <div className="markdown-body bg-transparent">
-           <Markdown>{data}</Markdown>
-          </div>
-  
- 
-  
 
 
+function Parser({ data }) {
+  React.useEffect(() => {
+    document.querySelectorAll("code").forEach((block) => {
+      hljs.highlightElement(block);
+    });
+  }, [data]);
+
+  return (
+    <div className="markdown-body bg-transparent">
+      <Markdown>{data}</Markdown>
+    </div>
+  );
 }
+
+
 
 export default App;
