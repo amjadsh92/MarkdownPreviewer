@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
 import Markdown from 'marked-react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMaximize } from "@fortawesome/free-solid-svg-icons";
 import { faDownLeftAndUpRightToCenter } from "@fortawesome/free-solid-svg-icons";
@@ -17,13 +17,30 @@ import React from "react";
 import hljs from 'highlight.js';
 import 'highlight.js/styles/default.css'; // Import the default Highlight.js style
 
+
+
 function App() {
   const [markdown, setMarkdown] = useState({
     showEditor: true,
     showPreviewer: true,
-    content: "",
+    content:"",
   });
 
+  useEffect(() => {
+    const fetchMarkdown = async () => {
+      debugger;
+      try {
+        const response = await fetch("/data.txt");
+        const text = await response.text();
+        setContent(text);
+      } catch (error) {
+        console.error("Error loading file:", error);
+      }
+    };
+
+    fetchMarkdown();
+  }, []); 
+  
   const togglePreview = () => {
     setMarkdown({ ...markdown, showPreviewer: !markdown.showPreviewer });
   };
@@ -42,6 +59,7 @@ function App() {
         isVisible={markdown.showEditor}
         togglePreview={togglePreview}
         setContent={setContent}
+        content = {markdown.content}
       />
       <Previewer
         isVisible={markdown.showPreviewer}
@@ -52,7 +70,7 @@ function App() {
   );
 }
 
-function Editor({ isVisible, togglePreview, setContent }) {
+function Editor({ isVisible, togglePreview, setContent, content }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleExpand = () => {
@@ -84,6 +102,7 @@ function Editor({ isVisible, togglePreview, setContent }) {
       <textarea
         onChange={handleChange}
         className="text-area border-0 w-100 form-control border-0 shadow-none"
+        value={content}
       ></textarea>
     </div>
   );
