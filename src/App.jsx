@@ -37,7 +37,7 @@ function App() {
   };
 
   return (
-    <div className="body h-100 min-vh-100 w-100">
+    <div className="body">
       <Editor
         isVisible={markdown.showEditor}
         togglePreview={togglePreview}
@@ -116,7 +116,7 @@ function Previewer({ isVisible, toggleEditor, data }) {
         minimize={handleMinimize}
       />
       <div className="previewer-area border-0 w-100 border-0">
-        <div className="previewer-data bg-transparent p-2"><Parser data={data} /></div>
+        <div className="previewer-data bg-transparent p-4"><Parser data={data} /></div>
       </div>
     </div>
   );

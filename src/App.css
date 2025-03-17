@@ -1,6 +1,8 @@
 .body{
   padding:1px;
-  background-color:#87b5b5
+  background-color:#87b5b5;
+  height:100vh;
+  overflow-y:scroll;
 
 }
 
@@ -37,8 +39,14 @@
 }
 
 
+
+
 .markdown-body table tr{ 
   background-color: transparent !important; 
+}
+
+.markdown-body {
+  height:100%;
 }
 
 .editor{
@@ -51,6 +59,7 @@
 
   width:800px;
   min-height:200px;
+  margin-bottom:20px;
 
 }
 
@@ -63,7 +72,7 @@
 .previewer-expanded{
   margin: 20px 0px;
   width:600px;
-  height:100vh;
+  
 }
 
 
@@ -100,6 +109,7 @@
   background-color:#c0d8d8;
   border-radius:0px;
   
+  
 
 }
 
@@ -110,16 +120,18 @@
 }
 
 .previewer-area{
-  height:calc(100% - 35px);
+  
   min-height:calc(200px - 35px);
+  
   
 }
 
 .previewer-data{
   word-wrap: break-word;  /* Ensures long words break */
   overflow-wrap: break-word; /* Alternative for better support */
+  
  /* white-space: pre-wrap;  /* Preserves newlines and wraps text */
-
+  
 }
 
 .form-control:focus{
