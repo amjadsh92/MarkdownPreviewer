@@ -28,7 +28,7 @@ function App() {
 
   useEffect(() => {
     const fetchMarkdown = async () => {
-      debugger;
+    
       try {
         const response = await fetch("/data.txt");
         const text = await response.text();
@@ -134,7 +134,7 @@ function Previewer({ isVisible, toggleEditor, data }) {
         expand={handleExpand}
         minimize={handleMinimize}
       />
-      <div className="previewer-area border-0 w-100 border-0">
+      <div className={`${isExpanded ? "previewer-area-expanded" : "previewer-area"} border-0 w-100 border-0`}>
         <div className="previewer-data bg-transparent p-4"><Parser data={data} /></div>
       </div>
     </div>

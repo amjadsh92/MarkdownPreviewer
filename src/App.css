@@ -72,6 +72,7 @@
 .previewer-expanded{
   margin: 20px 0px;
   width:600px;
+  min-height:800px
   
 }
 
@@ -121,10 +122,23 @@
 
 .previewer-area{
   
-  min-height:calc(200px - 35px);
+  min-height: calc(200px - 35px);
   
   
 }
+
+
+.previewer-area-expanded{
+  background-color:#c0d8d8;
+  border-radius:0px;
+  min-height: calc(800px - 35px);
+  
+  
+}
+
+
+
+
 
 .previewer-data{
   word-wrap: break-word;  /* Ensures long words break */
