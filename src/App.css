@@ -65,13 +65,13 @@
 
 .editor-expanded{
   margin: 20px 0px;
-  width:600px;
+  width:70%;
   height:100vh;
 }
 
 .previewer-expanded{
   margin: 20px 0px;
-  width:600px;
+  width:70%;
   min-height:800px
   
 }
